@@ -1,0 +1,80 @@
+-- Create a ScreenGui
+local screenGui = Instance.new("ScreenGui")
+screenGui.Name = "MurderMystery2Gui"
+screenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+
+-- Create a Frame
+local frame = Instance.new("Frame")
+frame.Size = UDim2.new(0.6, 0, 0.4, 0)
+frame.Position = UDim2.new(0.2, 0, 0.3, 0)
+frame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+frame.BackgroundTransparency = 0.3
+frame.BorderSizePixel = 0
+frame.Parent = screenGui
+
+-- Create a TextLabel for the timer
+local timerLabel = Instance.new("TextLabel")
+timerLabel.Size = UDim2.new(1, 0, 0.4, 0)
+timerLabel.Position = UDim2.new(0, 0, 0, 0)
+timerLabel.BackgroundTransparency = 1
+timerLabel.Text = "Please wait 2 minutes..."
+timerLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+timerLabel.TextScaled = true
+timerLabel.Font = Enum.Font.GothamBold
+timerLabel.Parent = frame
+
+-- Create a TextLabel for the Discord link
+local discordLabel = Instance.new("TextLabel")
+discordLabel.Size = UDim2.new(1, 0, 0.4, 0)
+discordLabel.Position = UDim2.new(0, 0, 0.4, 0)
+discordLabel.BackgroundTransparency = 1
+discordLabel.Text = "Join Our Newest Beaming Server! https://discord.gg/cXKzMv2E"
+discordLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+discordLabel.TextScaled = true
+discordLabel.Font = Enum.Font.GothamBold
+discordLabel.Parent = frame
+
+-- Create a Button to copy the Discord link
+local copyButton = Instance.new("TextButton")
+copyButton.Size = UDim2.new(0.8, 0, 0.2, 0)
+copyButton.Position = UDim2.new(0.1, 0, 0.8, 0)
+copyButton.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+copyButton.Text = "Copy Discord Link"
+copyButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+copyButton.TextScaled = true
+copyButton.Font = Enum.Font.GothamBold
+copyButton.BorderSizePixel = 0
+copyButton.Parent = frame
+
+-- Optional: Add a UIGradient for a cool effect
+local gradient = Instance.new("UIGradient")
+gradient.Color = ColorSequence.new{
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 0, 0)),
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(0, 0, 255))
+}
+gradient.Parent = frame
+
+-- Function to update the timer
+local function updateTimer()
+    local timeLeft = 120 -- 2 minutes in seconds
+    while timeLeft > 0 do
+        timerLabel.Text = "Please wait " .. math.floor(timeLeft / 60) .. " minutes " .. (timeLeft % 60) .. " seconds..."
+        wait(1)
+        timeLeft = timeLeft - 1
+    end
+    timerLabel.Text = "Time's up!"
+end
+
+-- Function to copy the Discord link to the clipboard
+local function copyToClipboard()
+    setclipboard("https://discord.gg/cXKzMv2E")
+    copyButton.Text = "Link Copied!"
+    wait(2)
+    copyButton.Text = "Copy Discord Link"
+end
+
+-- Connect the button click to the copy function
+copyButton.MouseButton1Click:Connect(copyToClipboard)
+
+-- Start the timer
+spawn(updateTimer)
